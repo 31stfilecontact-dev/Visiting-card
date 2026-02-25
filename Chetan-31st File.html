@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chetan Gupta | 31st File Executive Card</title>
-    <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=Inter:wght@400;500;600;700;900&display=swap');
 
@@ -40,16 +39,26 @@
             display: flex; 
             align-items: center; 
             justify-content: center; 
-            gap: 10px; 
+            gap: 15px; 
             margin-bottom: 12px; 
         }
         
-        .logo-wrapper { width: 180px; } 
+        .logo-wrapper { 
+            width: 160px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+        } 
+        .logo-img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
         
-        /* --- FINAL PRECISION SEAL --- */
+        /* --- PRECISION SEAL (80px) --- */
         .stamp-container {
             position: relative;
-            width: 80px; height: 80px; 
+            width: 80px; height: 80px;
             display: flex; align-items: center; justify-content: center;
             mix-blend-mode: multiply;
         }
@@ -63,7 +72,6 @@
 
         @keyframes rotateStamp { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-        /* Branding Text */
         .motto {
             font-family: 'Merriweather', serif; font-size: 10px; text-transform: uppercase;
             letter-spacing: 5px; color: var(--brand-navy); 
@@ -74,7 +82,6 @@
         .profile h1 { font-family: 'Merriweather', serif; font-size: 26px; font-weight: 900; text-align: center; margin-bottom: 5px; }
         .profile .title { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 25px; text-align: center; opacity: 0.8; }
 
-        /* Actions */
         .actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 25px; }
         .btn-main {
             background: var(--brand-navy); color: #fff; text-decoration: none;
@@ -84,13 +91,11 @@
             box-shadow: 0 4px 10px rgba(17, 41, 75, 0.2);
         }
 
-        /* Tabs */
         .tab-nav { display: flex; border-bottom: 2px solid rgba(17, 41, 75, 0.1); margin-bottom: 20px; }
         .tab-btn {
             flex: 1; padding: 12px; border: none; background: transparent;
             font-family: 'Merriweather', serif; font-size: 10px; font-weight: 700;
             cursor: pointer; color: var(--brand-navy); opacity: 0.4; transition: 0.3s;
-            text-transform: uppercase;
         }
         .tab-btn.active { opacity: 1; border-bottom: 3px solid var(--brand-navy); }
 
@@ -102,7 +107,6 @@
         .service-item h4 { font-family: 'Merriweather', serif; font-size: 13px; margin-bottom: 4px; font-weight: 900; }
         .service-item p { font-size: 11px; opacity: 0.8; line-height: 1.4; color: #333; }
 
-        /* Calendar */
         .bulk-sync-container {
             margin-bottom: 20px; padding: 15px; background: rgba(46, 125, 50, 0.04);
             border: 1px solid var(--legal-green); text-align: center; border-radius: 2px;
@@ -138,7 +142,7 @@
     <div class="document-card">
         <div class="header-container">
             <div class="logo-wrapper">
-                <dotlottie-player src="https://lottie.host/a188862d-baec-4581-93b2-455aedc10cbe/GIb7Kgz2nD.lottie" background="transparent" speed="0" loop autoplay></dotlottie-player>
+                <img src="https://lottie.host/1b605e51-2000-4659-9bc8-33b3af690a1c/CillWD6Bcz.png" alt="31st File Logo" class="logo-img">
             </div>
             
             <div class="stamp-container">
@@ -154,8 +158,8 @@
                     </g>
 
                     <g fill="var(--stamp-ink)">
-                        <text x="48" y="44" font-family="Merriweather" font-weight="900" font-size="20" text-anchor="middle" dominant-baseline="middle">CA</text>
-                        <text x="50" y="64" font-family="Inter" font-weight="900" font-size="7.5" text-anchor="middle" letter-spacing="4px" dominant-baseline="middle">INDIA</text>
+                        <text x="50" y="44" font-family="Merriweather" font-weight="900" font-size="20" text-anchor="middle" dominant-baseline="middle">CA</text>
+                        <text x="50" y="61" font-family="Inter" font-weight="900" font-size="8" text-anchor="middle" letter-spacing="4px" dominant-baseline="middle">INDIA</text>
                     </g>
                 </svg>
             </div>
@@ -190,7 +194,7 @@
 
         <div id="calendar" class="tab-content">
             <div class="bulk-sync-container">
-                <button class="btn-bulk" onclick="syncAllToCalendar()">Sync with Google Calender</button>
+                <button class="btn-bulk" onclick="syncAllToCalendar()">Sync Compliance schedule to calendar</button>
             </div>
             <div class="month-selector" id="monthSelector"></div>
             <div class="compliance-list" id="calendarList"></div>
@@ -212,6 +216,7 @@
         const complianceData = {};
         months.forEach(m => { complianceData[m] = baseMonthly.map(i => ({...i, date: i.d + m})); });
         
+        // Statutory Milestones
         complianceData["Mar 26"].push({ f: "Advance Tax: Final Installment (Q4 FY 25-26)", date: "15 Mar 26" });
         ["Jun 26", "Sep 26", "Dec 26", "Mar 27"].forEach(m => complianceData[m].push({ f: "Advance Tax: Quarterly Payment", date: "15 " + m }));
         complianceData["May 26"].push({ f: "TDS Quarterly Return (Q4 FY 25-26)", date: "31 May 26" }, { f: "SFT Filing", date: "31 May 26" });
@@ -230,29 +235,50 @@
             const p = dateStr.split(' ');
             const mIdx = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"].indexOf(p[1]);
             const dt = `${years[p[2]]}${String(mIdx + 1).padStart(2, '0')}${p[0].trim().padStart(2, '0')}`;
-            window.open(`https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(taskFull + " - 31st File")}&dates=${dt}T100000Z/${dt}T110000Z&details=${encodeURIComponent("Deadline: " + dateStr)}`, '_blank');
+            window.open(`https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(taskFull + " - 31st File")}&dates=${dt}T100000Z/${dt}T110000Z&details=${encodeURIComponent("Deadline Reminder via 31st File Card")}`, '_blank');
         }
 
         function syncAllToCalendar() {
-            let ics = "BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//31st File//EN\r\n";
+            let ics = "BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//31st File//Compliance Calendar//EN\r\nCALSCALE:GREGORIAN\r\nMETHOD:PUBLISH\r\n";
+            const now = new Date().toISOString().replace(/[-:]/g, '').split('.')[0] + "Z";
+            
             Object.keys(complianceData).forEach(m => {
                 complianceData[m].forEach((i, index) => {
-                    const p = i.date.split(' ');
-                    const mI = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"].indexOf(p[1]);
-                    const dt = `${years[p[2]]}${String(mI + 1).padStart(2, '0')}${p[0].trim().padStart(2, '0')}`;
-                    ics += `BEGIN:VEVENT\r\nUID:31f-${dt}-${index}@31stfile.com\r\nDTSTART;VALUE=DATE:${dt}\r\nSUMMARY:${(i.f || i.t).replace(/,/g, '\\,')} - 31st File\r\nEND:VEVENT\r\n`;
+                    const parts = i.date.split(' ');
+                    const mI = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"].indexOf(parts[1]);
+                    const year = parseInt(years[parts[2]]);
+                    const day = parseInt(parts[0]);
+                    
+                    const startDate = new Date(year, mI, day);
+                    const endDate = new Date(year, mI, day + 1);
+                    
+                    const dts = startDate.getFullYear() + String(startDate.getMonth() + 1).padStart(2, '0') + String(startDate.getDate()).padStart(2, '0');
+                    const dte = endDate.getFullYear() + String(endDate.getMonth() + 1).padStart(2, '0') + String(endDate.getDate()).padStart(2, '0');
+                    
+                    ics += "BEGIN:VEVENT\r\n";
+                    ics += `UID:31f-${dts}-${index}@31stfile.com\r\n`;
+                    ics += `DTSTAMP:${now}\r\n`;
+                    ics += `DTSTART;VALUE=DATE:${dts}\r\n`;
+                    ics += `DTEND;VALUE=DATE:${dte}\r\n`;
+                    ics += `SUMMARY:${(i.f || i.t).replace(/,/g, '\\,')} - 31st File\r\n`;
+                    ics += `DESCRIPTION:Statutory Deadline reminder via 31st File card.\r\n`;
+                    ics += "END:VEVENT\r\n";
                 });
             });
             ics += "END:VCALENDAR";
+            
             const blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
             const link = document.createElement('a');
             link.href = window.URL.createObjectURL(blob);
-            link.download = '31stFile_AmanMehta_Schedule.ics';
+            link.download = '31stFile_Compliancecalender_Schedule.ics';
+            document.body.appendChild(link);
             link.click();
-            alert("Master Schedule Downloaded!");
+            document.body.removeChild(link);
+            
+            // UPDATED POP-UP MESSAGE
+            alert("✅ Compliance Schedule Downloaded Successfully!\n\nINSTRUCTIONS TO USE:\n\n1. For Outlook / iPhone / Mac: Simply open the downloaded file and click 'Add All' or 'Import'.\n\n2. For Google Calendar (Desktop): Go to Calendar Settings -> Import & Export -> Select this file and click Import.\n\n3. For Android: Open the file using your native 'Calendar' or 'S Planner' app.");
         }
 
-        const selector = document.getElementById('monthSelector');
         const listContainer = document.getElementById('calendarList');
         function renderMonth(month) {
             listContainer.innerHTML = '';
@@ -263,6 +289,7 @@
                 listContainer.appendChild(div);
             });
         }
+        const selector = document.getElementById('monthSelector');
         months.forEach((m, i) => {
             const btn = document.createElement('button');
             btn.className = 'month-btn'; btn.innerText = m;
@@ -273,5 +300,4 @@
         renderMonth("Jan 26");
     </script>
 </body>
-
 </html>
