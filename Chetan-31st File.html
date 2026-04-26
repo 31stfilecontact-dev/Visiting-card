@@ -89,8 +89,60 @@
             font-weight: 700; text-align: center; border-radius: 2px;
             text-transform: uppercase; letter-spacing: 1.2px;
             box-shadow: 0 4px 10px rgba(17, 41, 75, 0.2);
+            border: none;
+        }
+        
+        .btn-vcard {
+            grid-column: span 2;
+            background: var(--legal-green);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .btn-vcard:hover { background: #1b5e20; transform: translateY(-1px); }
+
+        /* --- Social / Info Links --- */
+        .link-row-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center; 
+            padding: 10px 0 25px 0;
+            border-top: 1px solid rgba(17, 41, 75, 0.08); 
         }
 
+        .infographic-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: var(--brand-navy);
+            background: rgba(0,0,0,0.02);
+            padding: 10px 16px;
+            border-radius: 4px;
+            font-family: 'Inter', sans-serif;
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(17, 41, 75, 0.1);
+        }
+
+        .infographic-link:hover {
+            background: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+        }
+
+        .infographic-link svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .link-website:hover { border-color: #4A90E2; color: #4A90E2; }
+        .link-linkedin:hover { border-color: #0077b5; color: #0077b5; }
+        .link-newsletter:hover { border-color: #FF6B6B; color: #FF6B6B; }
+
+        /* --- Tabs & Content --- */
         .tab-nav { display: flex; border-bottom: 2px solid rgba(17, 41, 75, 0.1); margin-bottom: 20px; }
         .tab-btn {
             flex: 1; padding: 12px; border: none; background: transparent;
@@ -173,10 +225,40 @@
         </div>
 
         <div class="actions">
+            <button onclick="downloadVCard()" class="btn-main btn-vcard">
+                Save to Contacts
+            </button>
             <a href="tel:9652294598" class="btn-main">Call 9652294598</a>
             <a href="mailto:partner@31stfile.com" class="btn-main">Official Email</a>
         </div>
 
+        <div class="link-row-container">
+          <a href="http://31stfile.com" target="_blank" rel="noopener noreferrer" class="infographic-link link-website">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="2" y1="12" x2="22" y2="12"></line>
+              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+            </svg>
+            Website
+          </a>
+
+          <a href="https://www.linkedin.com/company/31st-file/" target="_blank" rel="noopener noreferrer" class="infographic-link link-linkedin">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+              <rect x="2" y="9" width="4" height="12"></rect>
+              <circle cx="4" cy="4" r="2"></circle>
+            </svg>
+            LinkedIn
+          </a>
+
+          <a href="https://31stfile-newsletter.vercel.app/" target="_blank" rel="noopener noreferrer" class="infographic-link link-newsletter">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+              <polyline points="22,6 12,13 2,6"></polyline>
+            </svg>
+            Newsletter
+          </a>
+        </div>
         <div class="tab-nav">
             <button class="tab-btn active" onclick="openTab('services')">Expert Services</button>
             <button class="tab-btn" onclick="openTab('calendar')">Statutory Calendar</button>
@@ -202,13 +284,39 @@
     </div>
 
     <script>
-        const months = ["Jan 26", "Feb 26", "Mar 26", "Apr 26", "May 26", "Jun 26", "Jul 26", "Aug 26", "Sep 26", "Oct 26", "Nov 26", "Dec 26", "Jan 27", "Feb 27", "Mar 27", "Apr 27"];
+        // --- vCard Generation Function ---
+        function downloadVCard() {
+            const vcard = "BEGIN:VCARD\r\n" +
+                          "VERSION:3.0\r\n" +
+                          "N:Gupta;Chetan;;;\r\n" +
+                          "FN:Chetan Gupta\r\n" +
+                          "ORG:31st File\r\n" +
+                          "TITLE:Partner\r\n" +
+                          "TEL;TYPE=WORK,VOICE:+919652294598\r\n" +
+                          "EMAIL;TYPE=PREF,INTERNET:partner@31stfile.com\r\n" +
+                          "URL:http://31stfile.com\r\n" +
+                          "END:VCARD";
+            
+            const blob = new Blob([vcard], { type: 'text/vcard' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.style.display = 'none';
+            a.href = url;
+            a.download = 'Chetan_Gupta_31stFile.vcf';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        }
+
+        // Timeline extended to June 2027
+        const months = ["Jan 26", "Feb 26", "Mar 26", "Apr 26", "May 26", "Jun 26", "Jul 26", "Aug 26", "Sep 26", "Oct 26", "Nov 26", "Dec 26", "Jan 27", "Feb 27", "Mar 27", "Apr 27", "May 27", "Jun 27"];
         const years = { "26": "2026", "27": "2027" };
         const baseMonthly = [
             { t: "TDS/TCS Payment", f: "TDS/TCS Statutory Monthly Payment", d: "07 " },
             { t: "ECB Filing", f: "ECB-2: External Commercial Borrowings Return", d: "07 " },
             { t: "GSTR-1", f: "GSTR-1: Monthly Outward Supply Return", d: "11 " },
-            { t: "GSTR-6", f: "GSTR-6: ISD Monthly Return", d: "13 " },
+            { t: "GSTR-6 (ISD)", f: "GSTR-6: Input Service Distributor (ISD) Return", d: "13 " },
             { t: "PF & ESI", f: "PF & ESI Monthly Contribution", d: "15 " },
             { t: "GSTR-3B", f: "GSTR-3B: Monthly Summary Return", d: "20 " },
             { t: "PT Filing", f: "PT: Monthly Statutory Filing", d: "30 " }
@@ -216,13 +324,100 @@
         const complianceData = {};
         months.forEach(m => { complianceData[m] = baseMonthly.map(i => ({...i, date: i.d + m})); });
         
-        // Statutory Milestones
-        complianceData["Mar 26"].push({ f: "Advance Tax: Final Installment (Q4 FY 25-26)", date: "15 Mar 26" });
-        ["Jun 26", "Sep 26", "Dec 26", "Mar 27"].forEach(m => complianceData[m].push({ f: "Advance Tax: Quarterly Payment", date: "15 " + m }));
-        complianceData["May 26"].push({ f: "TDS Quarterly Return (Q4 FY 25-26)", date: "31 May 26" }, { f: "SFT Filing", date: "31 May 26" });
-        complianceData["Jul 26"].push({ f: "TDS Return (Q1 FY 26-27)", date: "31 Jul 26" }, { f: "FEMA: FLA Return (RBI)", date: "15 Jul 26" }, { f: "ITR: Individual (Non-Audit)", date: "31 Jul 26" });
-        complianceData["Oct 26"].push({ f: "ROC AOC-4 (Financials)", date: "30 Oct 26" });
+        // --- Statutory Milestones ---
+        
+        // March
+        complianceData["Mar 26"].push(
+            { f: "Advance Tax: Final Installment (Q4 FY 25-26)", date: "15 Mar 26" },
+            { f: "GST LUT Renewal (For FY 26-27)", date: "31 Mar 26" }
+        );
+        complianceData["Mar 27"].push(
+            { f: "GST LUT Renewal (For FY 27-28)", date: "31 Mar 27" }
+        );
+
+        // Quarterly Advance Tax
+        ["Jun 26", "Sep 26", "Dec 26", "Mar 27", "Jun 27"].forEach(m => complianceData[m].push({ f: "Advance Tax: Quarterly Payment", date: "15 " + m }));
+        
+        // April
+        complianceData["Apr 26"].push(
+            { f: "GST CMP-08 (Composition Scheme)", date: "18 Apr 26" },
+            { f: "GSTR-4 (Annual Composition Return FY 25-26)", date: "30 Apr 26" },
+            { f: "ROC MSME-1 (Half Yearly)", date: "30 Apr 26" }
+        );
+        complianceData["Apr 27"].push(
+            { f: "GST CMP-08 (Composition Scheme)", date: "18 Apr 27" },
+            { f: "GSTR-4 (Annual Composition Return FY 26-27)", date: "30 Apr 27" },
+            { f: "ROC MSME-1 (Half Yearly)", date: "30 Apr 27" }
+        );
+
+        // May
+        complianceData["May 26"].push(
+            { f: "TCS Quarterly Return (Q4 FY 25-26)", date: "15 May 26" },
+            { f: "LLP Form 11 (Annual Return)", date: "30 May 26" },
+            { f: "TDS / Salary Return (Q4 FY 25-26)", date: "31 May 26" },
+            { f: "SFT Filing (FY 25-26)", date: "31 May 26" }
+        );
+        complianceData["May 27"].push(
+            { f: "TCS Quarterly Return (Q4 FY 26-27)", date: "15 May 27" },
+            { f: "LLP Form 11 (Annual Return)", date: "30 May 27" },
+            { f: "TDS / Salary Return (Q4 FY 26-27)", date: "31 May 27" },
+            { f: "SFT Filing (New Form Applicable - FY 26-27)", date: "31 May 27" }
+        );
+
+        // June
+        complianceData["Jun 26"].push(
+            { f: "Form 16 (TDS Certificate FY 25-26)", date: "15 Jun 26" },
+            { f: "ROC DPT-3 (Return of Deposits)", date: "30 Jun 26" }
+        );
+        complianceData["Jun 27"].push(
+            { f: "Form 16 (New Form Applicable - FY 26-27)", date: "15 Jun 27" },
+            { f: "ROC DPT-3 (Return of Deposits)", date: "30 Jun 27" }
+        );
+
+        // July
+        complianceData["Jul 26"].push(
+            { f: "TCS Quarterly Return (Q1 FY 26-27)", date: "15 Jul 26" },
+            { f: "FEMA: FLA Return (RBI)", date: "15 Jul 26" }, 
+            { f: "GST CMP-08 (Composition Scheme)", date: "18 Jul 26" },
+            { f: "TDS / Salary Return (Q1 FY 26-27)", date: "31 Jul 26" }, 
+            { f: "Form 67: Foreign Tax Credit (Non-Audit)", date: "31 Jul 26" },
+            { f: "ITR: Individual (Non-Audit)", date: "31 Jul 26" }
+        );
+
+        // September
+        complianceData["Sep 26"].push(
+            { f: "DIR-3 KYC (Director KYC)", date: "30 Sep 26" },
+            { f: "Tax Audit Report (Form 3CA/3CB & 3CD)", date: "30 Sep 26" }
+        );
+
+        // October
+        complianceData["Oct 26"].push(
+            { f: "TCS Quarterly Return (Q2 FY 26-27)", date: "15 Oct 26" },
+            { f: "GST CMP-08 (Composition Scheme)", date: "18 Oct 26" },
+            { f: "LLP Form 8 (Statement of Account & Solvency)", date: "30 Oct 26" },
+            { f: "ROC AOC-4 (Financials)", date: "30 Oct 26" },
+            { f: "ROC MSME-1 (Half Yearly)", date: "31 Oct 26" },
+            { f: "TDS / Salary Return (Q2 FY 26-27)", date: "31 Oct 26" },
+            { f: "Form 67: Foreign Tax Credit (Audit Cases)", date: "31 Oct 26" },
+            { f: "Transfer Pricing Report (Form 3CEB)", date: "31 Oct 26" },
+            { f: "ITR: Corporate/Audit Cases", date: "31 Oct 26" }
+        );
+
+        // November
+        complianceData["Nov 26"].push(
+            { f: "ROC MGT-7/7A (Annual Return)", date: "29 Nov 26" },
+            { f: "ITR: Transfer Pricing Cases", date: "30 Nov 26" }
+        );
+
+        // December
         complianceData["Dec 26"].push({ f: "GSTR-9 & 9C: Annual Return", date: "31 Dec 26" });
+
+        // January
+        complianceData["Jan 27"].push(
+            { f: "TCS Quarterly Return (Q3 FY 26-27)", date: "15 Jan 27" },
+            { f: "GST CMP-08 (Composition Scheme)", date: "18 Jan 27" },
+            { f: "TDS / Salary Return (Q3 FY 26-27)", date: "31 Jan 27" }
+        );
 
         function openTab(tabName) {
             document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
@@ -275,7 +470,6 @@
             link.click();
             document.body.removeChild(link);
             
-            // UPDATED POP-UP MESSAGE
             alert("✅ Compliance Schedule Downloaded Successfully!\n\nINSTRUCTIONS TO USE:\n\n1. For Outlook / iPhone / Mac: Simply open the downloaded file and click 'Add All' or 'Import'.\n\n2. For Google Calendar (Desktop): Go to Calendar Settings -> Import & Export -> Select this file and click Import.\n\n3. For Android: Open the file using your native 'Calendar' or 'S Planner' app.");
         }
 
